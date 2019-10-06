@@ -1,0 +1,22 @@
+version: 2
+
+jobs:
+  trigger_images_pulling:
+    docker:
+      - image: node:10.16.3-alpine
+    working_directory: ~/primes
+    steps:
+      - run:
+          name: Update git
+          command: |
+            curl -u ${CIRCLE_API_USER_TOKEN}: \
+            -d build_parameters[CIRCLE_JOB]=build \
+            https://circleci.com/api/v1.1/project/github/warframeblog/warframeblog/tree/develop
+workflows:
+  version: 2
+  images:
+    jobs:
+      - trigger_images_pulling:
+          filters:
+            branches:
+              only: master
