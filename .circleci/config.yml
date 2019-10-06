@@ -7,7 +7,10 @@ jobs:
     working_directory: ~/primes
     steps:
       - run:
-          name: Update git
+          name: Install curl
+          command: apk update && apk add curl curl-dev bash
+      - run:
+          name: Trigger main repo
           command: |
             curl -u ${CIRCLE_API_USER_TOKEN}: \
             -d build_parameters[CIRCLE_JOB]=build \
